@@ -15,14 +15,26 @@
 # define BITCOINEXCHANGE_HPP
 
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <fstream>
+#include <vector>
 
 class BitcoinExchange
 {
+    private:
+
     public:
         BitcoinExchange();
         ~BitcoinExchange();
+        BitcoinExchange(std::vector<std::string>);
         BitcoinExchange(BitcoinExchange const & copy);
         BitcoinExchange & operator=(BitcoinExchange const & copy);
+        double CalculRate(double);
+        double ToInt(std::string);
+        double TokenValue(std::string);
+        std::string TokenDate(std::string);
+       
 
 };
 #endif
