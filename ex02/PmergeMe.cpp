@@ -26,6 +26,7 @@ PmergeMe::PmergeMe(std::deque<int> dequeSort)
         std::cout << *iter << ' ';
     std::cout << "before sorting" <<std::endl;
     int right = dequeSort.size();
+    std::cout << dequeSort.size() << std::endl;
     MergeDeque(dequeSort, 0, right);
     for(iter = dequeSort.begin(); iter != dequeSort.end(); iter++)
         std::cout << *iter << ' ';
@@ -51,8 +52,14 @@ void PmergeMe::MergeDeque(std::deque<int> dequeSort, int left, int right)
     if (left < right)
     {
         mid = (left + right) / 2;
-        MergeDeque(dequeSort, left, mid);   
+        std::cout << left << " " << mid << std::endl;
+        std::cout << "--------------- " << std::endl;
+        MergeDeque(dequeSort, left, mid);
+        std::cout << left << " " << mid << std::endl;
+         std::cout << "=============== " << std::endl;
         MergeDeque(dequeSort, mid+1, right);
+        std::cout << mid + 1 << " " << right << std::endl;
+        std::cout << "++++++++++++++ " << std::endl;
    
 
     } 
