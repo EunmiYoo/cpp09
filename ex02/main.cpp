@@ -1,9 +1,4 @@
-#include <iostream>
-// #include <cstdlib>
-#include <iomanip>
-//#include "PmergeMe.hpp"
-#include <deque>
-#include <list>
+#include "PmergeMe.hpp"
 #include <sstream>
 
 int main(int ac, char **av)
@@ -37,18 +32,17 @@ int main(int ac, char **av)
                     std::cout << "Error: just POSITIVE numbers possible" << std::endl;
                     return (0);
                  }
+              
           
             }
+            PmergeMe dequeSort(d);
+            PmergeMe listSort(l);
             }
             catch(std::invalid_argument& e){
                 std::cout << "Error ! " << e.what() << std::endl;
                 }
     }
-    for(iter = d.begin(); iter != d.end(); iter++)
-        std::cout << *iter << ' ';
-    std::cout << std::endl;
-    for(it = l.begin(); it != l.end(); it++)
-        std::cout << *it << ' ';
-    std::cout << std::endl;
+   
+  
     return (0);
 }

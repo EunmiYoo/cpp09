@@ -1,5 +1,3 @@
-#include <iostream>
-
 #ifndef PmergeMe_HPP
 # define PmergeMe_HPP
 
@@ -7,7 +5,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
-#include <stack>
+#include <deque>
+#include <list>
 
 class PmergeMe
 {
@@ -19,7 +18,10 @@ public:
     ~PmergeMe();
     PmergeMe(PmergeMe const & copy);
     PmergeMe & operator=(PmergeMe const & copy);
-    PmergeMe(std::string);
+    PmergeMe(std::deque<int>);
+    PmergeMe(std::list<int>);
+    void MergeDeque(std::deque<int>, int, int);
+    void MergeList(std::list<int>,int, int);
    
 
 };
