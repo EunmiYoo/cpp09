@@ -59,6 +59,9 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "cmath": "cpp",
+        "numbers": "cpp"
     }
 }

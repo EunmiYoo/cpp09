@@ -6,16 +6,16 @@
 #    By: eyoo <eyoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:43:54 by eyoo              #+#    #+#              #
-#    Updated: 2023/03/09 14:20:55 by eyoo             ###   ########.fr        #
+#    Updated: 2023/03/13 18:59:10 by eyoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				= c++
 RM				= rm -f
 CCFLAGS			= -Wall -Wextra -Werror -std=c++98
-NAME			= btc
+NAME			= PmergeMe
 
-SRCS			= main.cpp BitcoinExchange.cpp
+SRCS			= main.cpp PmergeMe.cpp
 OBJS_DIR		= objs
 
 OBJS			= $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
