@@ -36,9 +36,9 @@ class BitcoinExchange
         std::string ValueToken(std::string);
         std::string DateToken(std::string);
         std::map<std::string, float> saveDataMap();
-        float searchRateInMap(std::string date);
+        float searchRateInMap(std::string);
         bool validDateFormat(std::string);
-        bool validValueFormat(std::string value);
+        bool validValueFormat(std::string);
        
 
 };

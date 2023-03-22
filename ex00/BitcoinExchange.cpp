@@ -1,8 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <string>
 
-//#include <time.h> 
-
 BitcoinExchange::BitcoinExchange()
 {
 }
@@ -19,7 +17,6 @@ BitcoinExchange::BitcoinExchange(std::string line)
     float result = num * rate;
     char c = line[line.find("|") + 1];
     char b = line[line.find("|") - 1];
-   // std::cout << "무슨문자?: " << line[line.find("|") + 1] << std::endl;
     if(validDateFormat(date))
     {
       std::cout <<"Error: bad input => " << line << std::endl;
@@ -31,12 +28,7 @@ BitcoinExchange::BitcoinExchange(std::string line)
     else if(!validValueFormat(value))
     {
          std::cout <<"Error: bad input => " << line << std::endl;
-    }
-  /*   else if(isdigit(num))
-    {
-        std::cout << "Error: not good format => need space before ou after bar" << std::endl;
-    } */
-   
+    }   
     else if((num <= 0))
     {
         std::cout << "Error: not a positive number."<< std::endl;
@@ -94,7 +86,6 @@ std::map<std::string, float> BitcoinExchange::saveDataMap()
     {
        
         std::string getLine;
-     //   int i = 0;
         while(getline(fs, getLine))
         {
             if(getLine != "date,exchange_rate")
@@ -106,18 +97,14 @@ std::map<std::string, float> BitcoinExchange::saveDataMap()
                 std::string ratee = getLine.substr(findComma + 1,front);
                 rate = ToInt(getLine.substr(findComma + 1));
                 Rates.insert(std::pair<std::string, float>(RateDate,rate));
-            }
-       //.     i++;
-           
+            }  
         }
     }
     fs.close();
     return (Rates);
 
 }
-/* float BitcoinExchange::CalculRate(float number, std::string date)
-{
-} */
+
 
 std::string BitcoinExchange::ValueToken(std::string line)
 {
@@ -166,62 +153,39 @@ bool BitcoinExchange::validDateFormat(std::string date)
     
     if (!strptime(date.c_str(), "%Y-%m-%d", &tm))
     {
-        //std::cout <<"Error: bad input => format " << date << std::endl;
         return (true);
     }
 
     if(!(year > 2008 && year <= 2023) || isdigit(year))
     {
-        //std::cout <<"Error: bad input year => " << year << std::endl;
         return (true);
     }
-
-  /*   if( month >=1 && month <= 9)
-    {
-        if(!(months[0] == '0'))
-             std::cout <<"Error: bad input month => " << date << std::endl;
-
-    } */
     if(month >= 1 && month <=12)
     {
         if( (month >=1 && month <= 9)  && !(months.length() == 2) )
         {
-         //       std::cout <<"Error: bad input month => " << date << std::endl;
                  return (true);
         }
     }
-
     if(!(month >= 1 && month <=12) || isdigit(month))
     {
-       // std::cout <<"Error: bad input month => " << date << std::endl;
         return (true);
     }
-      // 
-
-    
     if((day >= 1 && day <= 31))
     {
         if( (day >=1 && day <= 9)  && !(days.length() == 2) )
         {
-             //   std::cout <<"Error: bad input month => " << date << std::endl;
                  return (true);
         }
-        //std::cout <<"Error: bad input day => " << date << std::endl;
-          //  return (true);
-
     }
     if(!(day >= 1 && day <= 31) || isdigit(day))
         return (true);
 
     return(false);  
-  //  std::cout << year << std::endl;
-    //std::cout << month << std::endl;
-    //std::cout << day << std::endl;
 }
 
 bool BitcoinExchange::validValueFormat(std::string value)
 {
-    //std::string::iterator it;
     int count = std::count(value.begin(), value.end(), '.');
     if(count >= 2)
         return false;
