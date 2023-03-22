@@ -18,8 +18,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <vector>
 #include <map>
-#include <stdexcept>
 
 class BitcoinExchange
 {
@@ -28,17 +28,13 @@ class BitcoinExchange
     public:
         BitcoinExchange();
         ~BitcoinExchange();
-        BitcoinExchange(std::string);
+        BitcoinExchange(std::vector<std::string>);
         BitcoinExchange(BitcoinExchange const & copy);
         BitcoinExchange & operator=(BitcoinExchange const & copy);
-        float CalculRate(float, std::string);
-        float ToInt(std::string);
-        std::string ValueToken(std::string);
-        std::string DateToken(std::string);
-        std::map<std::string, float> saveDataMap();
-        float searchRateInMap(std::string date);
-        bool validDateFormat(std::string);
-        bool validValueFormat(std::string value);
+        double CalculRate(double, std::string);
+        double ToInt(std::string);
+        double TokenValue(std::string);
+        std::string TokenDate(std::string);
        
 
 };

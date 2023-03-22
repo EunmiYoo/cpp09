@@ -62,6 +62,8 @@
         "vector": "cpp",
         "*.tcc": "cpp",
         "cmath": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "array": "cpp",
+        "filesystem": "cpp"
     }
 }

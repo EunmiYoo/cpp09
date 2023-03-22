@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <string>
+
 //#include <time.h> 
 
 BitcoinExchange::BitcoinExchange()
@@ -12,27 +13,35 @@ BitcoinExchange::~BitcoinExchange()
 BitcoinExchange::BitcoinExchange(std::string line)
 {
     std::string date = DateToken(line); 
-    float num = ValueToken(line);
+    std::string value = ValueToken(line);
+    float num = ToInt(value);
     float rate = searchRateInMap(date);
     float result = num * rate;
     char c = line[line.find("|") + 1];
     char b = line[line.find("|") - 1];
    // std::cout << "무슨문자?: " << line[line.find("|") + 1] << std::endl;
-    if(!isspace(c) || !isspace(b))
+    if(validDateFormat(date))
+    {
+      std::cout <<"Error: bad input => " << line << std::endl;
+    }
+    else if(!isspace(c) && !isspace(b))
     {
         std::cout << "Error: not good format => need space before ou after bar" << std::endl;
     }
-
-    if(validDateFormat(date))
+    else if(!validValueFormat(value))
     {
-      std::cout <<"Error: bad input => " << date << std::endl;
+         std::cout <<"Error: bad input => " << line << std::endl;
     }
+  /*   else if(isdigit(num))
+    {
+        std::cout << "Error: not good format => need space before ou after bar" << std::endl;
+    } */
    
-    else if((num < 0))
+    else if((num <= 0))
     {
         std::cout << "Error: not a positive number."<< std::endl;
     }  
-    else if(num > 1000)
+    else if(num >= 1000)
     {
         std::cout << "Error: too large a number." << std::endl;
     } 
@@ -102,6 +111,7 @@ std::map<std::string, float> BitcoinExchange::saveDataMap()
            
         }
     }
+    fs.close();
     return (Rates);
 
 }
@@ -109,14 +119,14 @@ std::map<std::string, float> BitcoinExchange::saveDataMap()
 {
 } */
 
-float BitcoinExchange::ValueToken(std::string line)
+std::string BitcoinExchange::ValueToken(std::string line)
 {
     int end;
     int findBar = 0;
-    float valueIndex;
+    std::string valueIndex;
     findBar = line.find('|');
     end = findBar + 1;
-    valueIndex = ToInt(line.substr(findBar + 2, end));
+    valueIndex = line.substr(findBar + 2, end);
     return(valueIndex);
 }
 
@@ -207,7 +217,27 @@ bool BitcoinExchange::validDateFormat(std::string date)
   //  std::cout << year << std::endl;
     //std::cout << month << std::endl;
     //std::cout << day << std::endl;
-
-
-
 }
+
+bool BitcoinExchange::validValueFormat(std::string value)
+{
+    //std::string::iterator it;
+    int count = std::count(value.begin(), value.end(), '.');
+    if(count >= 2)
+        return false;
+    int i = 0;
+    while(value[i])
+    {
+        if(value[i] == '-')
+            i++;
+        if(value[i] == '.')
+            i++;
+        if(isdigit(value[i]))
+            i++;
+        else  
+         return false;
+    }
+    return true;
+}
+   
+  

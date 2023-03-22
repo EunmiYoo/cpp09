@@ -22,6 +22,7 @@ public:
     PmergeMe(std::list<int>);
     void MergeDeque(std::deque<int>, int, int);
     void MergeList(std::list<int>,int, int);
+    void MergeInsert(std::deque <int> &, int, int ,int);
    
 
 };
