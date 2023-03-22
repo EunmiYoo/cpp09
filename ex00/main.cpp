@@ -1,9 +1,4 @@
 #include "BitcoinExchange.hpp"
-#include "fstream"
-#include "iostream"
-#include <vector>
-#include <string>
-#include <sstream>
 
 int main(int ac, char **av)
 {

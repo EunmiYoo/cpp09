@@ -19,7 +19,6 @@
 #include <string>
 #include <fstream>
 #include <map>
-#include <stdexcept>
 
 class BitcoinExchange
 {
@@ -31,7 +30,6 @@ class BitcoinExchange
         BitcoinExchange(std::string);
         BitcoinExchange(BitcoinExchange const & copy);
         BitcoinExchange & operator=(BitcoinExchange const & copy);
-        float CalculRate(float, std::string);
         float ToInt(std::string);
         std::string ValueToken(std::string);
         std::string DateToken(std::string);
