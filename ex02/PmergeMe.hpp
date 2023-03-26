@@ -6,7 +6,9 @@
 #include <string>
 #include <fstream>
 #include <deque>
-#include <list>
+#include <vector>
+#include <algorithm>
+#include <ctime>
 
 class PmergeMe
 {
@@ -19,12 +21,9 @@ public:
     PmergeMe(PmergeMe const & copy);
     PmergeMe & operator=(PmergeMe const & copy);
     PmergeMe(std::deque<int>);
-    PmergeMe(std::list<int>);
-    void MergeDeque(std::deque<int>, int, int);
-    void MergeList(std::list<int>,int, int);
-    void MergeInsert(std::deque <int> &, int, int ,int);
-   
-
+    PmergeMe(std::vector<int>);
+    void MergeDeque(std::deque<std::pair <int, int> >);
+    void MergeVector(std::vector<std::pair <int, int> > myPair);
 };
 
 

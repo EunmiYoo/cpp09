@@ -1,6 +1,4 @@
 #include "PmergeMe.hpp"
-#include <algorithm>
-#include <utility> 
 
 PmergeMe::PmergeMe()
 {
@@ -20,108 +18,142 @@ PmergeMe & PmergeMe::operator=(PmergeMe const & copy)
     (void)copy;
     return (*this);
 }
+
 PmergeMe::PmergeMe(std::deque<int> dequeSort)
 {
+    std::deque <std::pair <int, int> > myDeque;
     std::deque<int>::iterator iter;
-    for(iter = dequeSort.begin(); iter != dequeSort.end(); iter++)
-        std::cout << *iter << ' ';
-    std::cout << "before sorting" <<std::endl;
-    int right = dequeSort.size() - 1;
-    std::cout << dequeSort.size() << std::endl;
-    MergeDeque(dequeSort, 0, right);
-   
-}
-PmergeMe::PmergeMe(std::list<int> listSort)
-{
-    std::list<int>::iterator it;
-    for(it = listSort.begin(); it != listSort.end(); it++)
-        std::cout << *it  << ' ';
-    std::cout << "before sorting" << std::endl;
-    //sort(listSort.begin(), listSort.end());
-  /*   for(it = listSort.begin(); it != listSort.end(); it++)
-        std::cout  << *it  << ' ';
-    std::cout << "after sorting"<< std::endl; */
-}
-
-void PmergeMe::MergeDeque(std::deque<int> dequeSort, int left, int right)
-{
-    
-    // std::deque<int>::iterator j;
-    int mid;
-    if(left < right)
+    std::deque <std::pair <int, int> >::iterator it;
+    int i = 0;
+    std::cout << "[Before] : ";
+    while(dequeSort[i])
     {
-       
-        mid = (left + right) / 2;
-        if (mid-left == 1 || right - (mid + 1) == 1 )
-            MergeInsert(dequeSort, left, mid, right);
-        else{
-       // std::cout << left << " " << mid << std::endl;
-        //std::cout << "--------------- " << std::endl;
-        std::cout << left << " " << mid << std::endl;
-        std::cout << " 왼쪽 라인 =============== " << std::endl;
-        MergeDeque(dequeSort, left, mid);
-        std::cout << mid + 1 << " " << right << std::endl;
-        std::cout << "오른쪽 라인++++++++++++++ " << std::endl;
-        MergeDeque(dequeSort, mid+1, right);
-        
+        std::cout << dequeSort[i] << " ";
+        i++;
+    }
+    i = 0;
+    while(dequeSort[i])
+    {
+        myDeque.push_back(std::make_pair(dequeSort[i], dequeSort[i+1]));
+        i++;
+        i++;
+    }
+    MergeDeque(myDeque);
+}
+
+
+PmergeMe::PmergeMe(std::vector<int> vectorSort)
+{
+    std::vector <std::pair <int, int> > myVector;
+    std::vector<int>::iterator iter;
+    std::vector <std::pair <int, int> >::iterator it;
+    int i = 0;
+    while(vectorSort[i])
+    {    
+        myVector.push_back(std::make_pair(vectorSort[i], vectorSort[i+1]));
+        i++;
+        i++;
+    }
+    MergeVector(myVector);
+}
+
+void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
+{
+    std::deque <std::pair <int, int> >::iterator it;
+    std::deque <int> leftDeque;
+    std::deque <int> rightDeque;
+    std::deque <int>::iterator leftIt;
+    std::deque <int>::iterator rightIt;
+
+    for(it = myPair.begin(); it != myPair.end(); it++)
+    {
+        if (it->first > it->second && it->second != 0)
+        {
+            std::swap(it->first, it->second);
         }
+        leftDeque.push_back(it->first);
+        rightDeque.push_back(it->second);
 
-   
-
+    }
+    std::sort(leftDeque.begin(), leftDeque.end());
+    for(rightIt= rightDeque.begin(); rightIt != rightDeque.end(); rightIt++)
+    {
+        for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
+        {
+            while(*leftIt >= *rightIt)
+            {
+                break;
+            }
+            if(*leftIt <= *rightIt && *(leftIt + 1) > *rightIt)
+            {
+                leftDeque.insert(leftIt + 1, *rightIt);
+                break;
+            }
+            if(*leftIt <= *rightIt && leftIt + 1 == leftDeque.end())
+            {
+                leftDeque.push_back(*rightIt);
+                break;
+            }           
+        }
+    }
+    std::cout << std::endl;
+    std::cout << "[After]: ";
+    std::cout << " <std::deque> -> " ;
+     for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
+    {
+             std::cout << *leftIt << " ";
     }
  
-
 }
-void PmergeMe::MergeInsert(std::deque<int> &dequeSort, int l, int m, int r)  
 
+void PmergeMe::MergeVector(std::vector<std::pair <int, int> > myPair)
 {
-     std::cout << l << std::endl;
-     std::cout << m<< std::endl;
-    
-     std::deque<int> merge;
+    std::vector<std::pair <int, int> >::iterator it;
+    std::vector<int> leftV;
+    std::vector<int> rightV;
+    std::vector<int>::iterator leftIt;
+    std::vector<int>::iterator rightIt;
 
+    for(it = myPair.begin(); it != myPair.end(); it++)
+    {
+        if (it->first > it->second && it->second != 0)
+        {
+            std::swap(it->first, it->second);
+        }
+        leftV.push_back(it->first);
+        rightV.push_back(it->second);
 
-     std::deque<int>::iterator i;
-     {
-     if(dequeSort[l]> dequeSort[m]) 
-     {
-        std::swap(dequeSort[l], dequeSort[m]);
-        std::cout << "@@@@@@@@@@@@" << std::endl;     
-        std::cout << "앞: " <<dequeSort[l]<<"뒤: " << dequeSort[m] << std::endl;
-        std::cout << "@@@@@@@@@@@@" << std::endl;
-     
-    
-     }
-    merge.push_back(dequeSort[l]);
-    merge.push_back(dequeSort[m]);
-       
-    
-     std::cout << m + 1<< std::endl;
-     std::cout << r << std::endl;
-   
-     if(dequeSort[m+1] > dequeSort[r]) 
-    {  
-        std::swap(dequeSort[m+1], dequeSort[r]);
-        std::cout << "===========" << std::endl;
-        std::cout << "앞: " <<dequeSort[m+1]<<"뒤: " << dequeSort[r] << std::endl;
-        std::cout << "===========" << std::endl;
-     
-      
     }
-    merge.push_back(dequeSort[m+1]);
-    merge.push_back(dequeSort[r]);
+    std::sort(leftV.begin(), leftV.end());
+    for(rightIt= rightV.begin(); rightIt != rightV.end(); rightIt++)
+    {
+        for(leftIt = leftV.begin(); leftIt != leftV.end(); leftIt++)
+        {
+            while(*leftIt >= *rightIt)
+            {
+                break;
+            }
+            if(*leftIt <= *rightIt && *(leftIt + 1) > *rightIt)
+            {
+                leftV.insert(leftIt + 1, *rightIt);
+                break;
+            }
+            if(*leftIt <= *rightIt && leftIt + 1 == leftV.end())
+            {
+                leftV.push_back(*rightIt);
+                break;
+            }              
+        }
+    }
+    std::cout << " <std::vector> -> " ;
+     for(leftIt = leftV.begin(); leftIt != leftV.end(); leftIt++)
+    {
+             std::cout << *leftIt << " ";
+    }
+    std::cout << std::endl;
     
-     }
-  
-    for(i = merge.begin(); i != merge.end(); i++)
-    std::cout << *i << ' ';
-    std::cout << "afer sorting" << std::endl;
 }
-/* void PmergeMe::MergeList(std::list<int> listSort, int left, int right)
-{
 
-}
- */
 
 
 

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #ifndef RPN_HPP
 # define RPN_HPP
 
@@ -23,10 +21,6 @@ public:
     int calcul(int, int, char);
     int isOperator(char);
     int isNumber(char);
-
 };
-
-
-
 
 #endif
