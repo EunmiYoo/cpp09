@@ -10,8 +10,6 @@ int main(int ac, char **av)
     clock_t start, dequeStop, vectorStop;
 
     int num;
-
-    
     if(ac < 2)
     {
         std::cout << "Error, One argument" << std::endl;
@@ -38,6 +36,7 @@ int main(int ac, char **av)
                         std::cout << "Error: not allowed format(only positive number possible)" << std::endl;
                         return (0);
                     }
+                    //after parse, put the elements into each containers. 
                     d.push_back(num);
                     v.push_back(num);        
                     ss.clear();                     
@@ -48,11 +47,11 @@ int main(int ac, char **av)
                     return (0);
                 }
             }
-        
+            // Start sort using deque container
             start = clock() ;
             PmergeMe dequeSort(d);
             dequeStop = clock();
-           
+            // Start sort using vector container
             start = clock() ;
             PmergeMe VertorSort(v);
             vectorStop = clock();

@@ -18,7 +18,7 @@ PmergeMe & PmergeMe::operator=(PmergeMe const & copy)
     (void)copy;
     return (*this);
 }
-
+// group the list into pairs. If the list is odd, the last element is unpaired.
 PmergeMe::PmergeMe(std::deque<int> dequeSort)
 {
     std::deque <std::pair <int, int> > myDeque;
@@ -41,7 +41,7 @@ PmergeMe::PmergeMe(std::deque<int> dequeSort)
     MergeDeque(myDeque);
 }
 
-
+// group the list into pairs. If the list is odd, the last element is unpaired.
 PmergeMe::PmergeMe(std::vector<int> vectorSort)
 {
     std::vector <std::pair <int, int> > myVector;
@@ -64,7 +64,10 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
     std::deque <int> rightDeque;
     std::deque <int>::iterator leftIt;
     std::deque <int>::iterator rightIt;
-
+    
+    //Each pair sort into what we will call [int int] pairs.
+    //after Put the first elements into named "leftDeque"
+    //after Put the first elements into named "rightDeque"
     for(it = myPair.begin(); it != myPair.end(); it++)
     {
         if (it->first > it->second && it->second != 0)
@@ -75,7 +78,9 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
         rightDeque.push_back(it->second);
 
     }
+    //sort for "leftDeque"
     std::sort(leftDeque.begin(), leftDeque.end());
+    // Insert: Move elements from rightdeque to leftDeque using insert
     for(rightIt= rightDeque.begin(); rightIt != rightDeque.end(); rightIt++)
     {
         for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
@@ -96,10 +101,11 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
             }           
         }
     }
+    //print sorted elements
     std::cout << std::endl;
     std::cout << "[After]: ";
-    std::cout << " <std::deque> -> " ;
-     for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
+    std::cout << " <std::deque> -> " ;    
+    for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
     {
              std::cout << *leftIt << " ";
     }
@@ -150,11 +156,5 @@ void PmergeMe::MergeVector(std::vector<std::pair <int, int> > myPair)
     {
              std::cout << *leftIt << " ";
     }
-    std::cout << std::endl;
-    
+    std::cout << std::endl;    
 }
-
-
-
-
-
