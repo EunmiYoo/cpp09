@@ -26,17 +26,17 @@ PmergeMe::PmergeMe(std::deque<int> dequeSort)
     std::deque <std::pair <int, int> >::iterator it;
     int i = 0;
     std::cout << "[Before] : ";
-    while(dequeSort[i])
+    while(dequeSort[i] != 0)
     {
         std::cout << dequeSort[i] << " ";
         i++;
     }
-    i = 0;
-    while(dequeSort[i])
+    size_t j = 0;
+    while(j < dequeSort.size())
     {
-        myDeque.push_back(std::make_pair(dequeSort[i], dequeSort[i+1]));
-        i++;
-        i++;
+        myDeque.push_back(std::make_pair(dequeSort[j], dequeSort[j+1]));
+        j++;
+        j++;
     }
     MergeDeque(myDeque);
 }
@@ -47,12 +47,12 @@ PmergeMe::PmergeMe(std::vector<int> vectorSort)
     std::vector <std::pair <int, int> > myVector;
     std::vector<int>::iterator iter;
     std::vector <std::pair <int, int> >::iterator it;
-    int i = 0;
-    while(vectorSort[i])
+    size_t i = 0;
+    while(i < vectorSort.size())
     {    
         myVector.push_back(std::make_pair(vectorSort[i], vectorSort[i+1]));
         i++;
-        i++;
+        i++;    
     }
     MergeVector(myVector);
 }
@@ -80,15 +80,10 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
     }
     //sort for "leftDeque"
     std::sort(leftDeque.begin(), leftDeque.end());
-    // Insert: Move elements from rightdeque to leftDeque using insert
     for(rightIt= rightDeque.begin(); rightIt != rightDeque.end(); rightIt++)
     {
         for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
         {
-            while(*leftIt >= *rightIt)
-            {
-                break;
-            }
             if(*leftIt <= *rightIt && *(leftIt + 1) > *rightIt)
             {
                 leftDeque.insert(leftIt + 1, *rightIt);
@@ -102,25 +97,24 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
         }
     }
     //print sorted elements
-    std::cout << std::endl;
+    std::cout << '\n';
     std::cout << "[After]: ";
-    std::cout << " <std::deque> -> " ;    
+    std::cout << " <std::deque>  -> " ;    
     for(leftIt = leftDeque.begin(); leftIt != leftDeque.end(); leftIt++)
     {
              std::cout << *leftIt << " ";
     }
- 
 }
 
-void PmergeMe::MergeVector(std::vector<std::pair <int, int> > myPair)
+void PmergeMe::MergeVector(std::vector<std::pair <int, int> > myVectorPair)
 {
     std::vector<std::pair <int, int> >::iterator it;
     std::vector<int> leftV;
     std::vector<int> rightV;
-    std::vector<int>::iterator leftIt;
-    std::vector<int>::iterator rightIt;
+    std::vector<int>::iterator leftItor;
+    std::vector<int>::iterator rightItor;
 
-    for(it = myPair.begin(); it != myPair.end(); it++)
+    for(it = myVectorPair.begin(); it != myVectorPair.end(); it++)
     {
         if (it->first > it->second && it->second != 0)
         {
@@ -128,33 +122,29 @@ void PmergeMe::MergeVector(std::vector<std::pair <int, int> > myPair)
         }
         leftV.push_back(it->first);
         rightV.push_back(it->second);
-
-    }
+    } 
     std::sort(leftV.begin(), leftV.end());
-    for(rightIt= rightV.begin(); rightIt != rightV.end(); rightIt++)
+    for(rightItor= rightV.begin(); rightItor != rightV.end(); rightItor++)
     {
-        for(leftIt = leftV.begin(); leftIt != leftV.end(); leftIt++)
+        for(leftItor = leftV.begin(); leftItor != leftV.end(); leftItor++)
         {
-            while(*leftIt >= *rightIt)
+            if(*leftItor <= *rightItor && *(leftItor + 1) > *rightItor)
             {
+                leftV.insert(leftItor + 1, *rightItor);
                 break;
             }
-            if(*leftIt <= *rightIt && *(leftIt + 1) > *rightIt)
+            if(*leftItor <= *rightItor && leftItor + 1 == leftV.end())
             {
-                leftV.insert(leftIt + 1, *rightIt);
-                break;
-            }
-            if(*leftIt <= *rightIt && leftIt + 1 == leftV.end())
-            {
-                leftV.push_back(*rightIt);
+                leftV.push_back(*rightItor);
                 break;
             }              
         }
     }
-    std::cout << " <std::vector> -> " ;
-     for(leftIt = leftV.begin(); leftIt != leftV.end(); leftIt++)
+    std::cout << '\n';
+    std::cout << "          <std::vector> -> " ;
+     for(leftItor = leftV.begin(); leftItor != leftV.end(); leftItor++)
     {
-             std::cout << *leftIt << " ";
+             std::cout << *leftItor << " ";
     }
     std::cout << std::endl;    
 }

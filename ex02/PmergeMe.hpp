@@ -10,11 +10,15 @@
 #include <algorithm>
 #include <ctime>
 
+//vector has contiguous memory structure.
+//deque:: data is formed by connecting small blocks of memory.
+//For this reason, access to each element of a vector is faster than in a deque.
+//And insertion/removal at the container end is the fastest of the three(vector,deque,list)
 class PmergeMe
 {
-private:
+    private:
     /* data */
-public:
+    public:
     
     PmergeMe();
     ~PmergeMe();

@@ -1,5 +1,5 @@
 #include "PmergeMe.hpp"
-
+#include <limits.h>
 int main(int ac, char **av)
 {
     std::deque<int> d;
@@ -7,7 +7,7 @@ int main(int ac, char **av)
     std::vector<int> v;
     std::vector<int>::iterator it;
     std::stringstream ss;
-    clock_t start, dequeStop, vectorStop;
+    clock_t startDeque,startVector, dequeStop, vectorStop;
 
     int num;
     if(ac < 2)
@@ -27,17 +27,21 @@ int main(int ac, char **av)
                         return (0);
                     }        
                 }
-                if(isdigit(*av[i]))
+                std::istringstream ss(av[i]);
+                if(ss >> num)
                 {
-                    ss << av[i];
-                    ss >> num; 
-                    if(num <= 0)
+                     if(num <= 0)
                     {
                         std::cout << "Error: not allowed format(only positive number possible)" << std::endl;
                         return (0);
                     }
-                    //after parse, put the elements into each containers. 
-                    d.push_back(num);
+                    else if (num > INT_MAX)
+                    {
+                        std::cout << "Error: integer out of range" << std::endl;
+                        return (0);
+                    }
+                    //after parse, put the elements into each containers.
+                    d.push_back(num); 
                     v.push_back(num);        
                     ss.clear();                     
                 }
@@ -48,22 +52,20 @@ int main(int ac, char **av)
                 }
             }
             // Start sort using deque container
-            start = clock() ;
+            startDeque = clock() ;
             PmergeMe dequeSort(d);
             dequeStop = clock();
             // Start sort using vector container
-            start = clock() ;
+            startVector = clock() ;
             PmergeMe VertorSort(v);
             vectorStop = clock();
 
-            std::cout << "Time to process a range of "<< d.size() <<" elements with std::[deque] :" << (float)(dequeStop - start)/CLOCKS_PER_SEC << " ms"<< std::endl;
-            std::cout << "Time to process a range of "<< v.size() <<" elements with std::[vector] :" << (float)(vectorStop - start)/CLOCKS_PER_SEC << " ms"<< std::endl;
+            std::cout << "Time to process a range of "<< d.size() <<" elements with std::[deque] :" << (float)(dequeStop - startDeque)/CLOCKS_PER_SEC << " ms"<< std::endl;
+            std::cout << "Time to process a range of "<< v.size() <<" elements with std::[vector] :" << (float)(vectorStop - startVector)/CLOCKS_PER_SEC << " ms"<< std::endl;
             }
             catch(std::invalid_argument& e){
                 std::cout << "Error ! " << e.what() << std::endl;
                 }
     }
-   
-  
     return (0);
 }
