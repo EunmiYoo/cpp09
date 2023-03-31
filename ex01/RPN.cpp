@@ -22,54 +22,56 @@ RPN & RPN::operator=(RPN const & copy)
     (void)copy;
     return (*this);
 }
+
 RPN::RPN(std::string input)
 {
     std::stack<int> s;
     int a, b;
     std::string::iterator it;
-    for(it = input.begin(); it != input.end(); it++)
+    for(it = input.begin(); it != input.end(); it++) 
     {
-        if(*it == ' ')
-            it++;
         if(isOperator(*it) == 1)
         {
+            
             if (s.size() < 2) 
                 throw std::invalid_argument("invalid_argument");
             a = s.top();
+            if(a == 0 && *it == '/')
+                throw std::invalid_argument("ZERO invalid_argument");
+              
             s.pop();
             b = s.top();
             s.pop();
             s.push(calcul(a, b, *it));
-          //  std::cout <<"연산하고푸쉬한 숫자" << s.top() << std::endl;
             
         }
-        else    
+        else if(isNumber(*it) == 1) 
         {
-         //   std::cout << "문자검사" << *it << std::endl;   
-           if(isNumber(*it) == 1) 
-           {int n;
+            int n;
             std::stringstream ss;
             ss << (*it);
             ss >> n;
-           // std::cout << "숫자검사" << n << std::endl;
             s.push(n);
-           }
-           else
-            throw std::invalid_argument("invalid_argument");
-
-           // std::cout <<"그냥푸쉬한 숫자" << s.top() << std::endl;
         }
-      
+        else if (*it != ' ')
+            throw std::invalid_argument("invalid_argument");
+    
     }
+    if(s.size() != 1)
+        throw std::invalid_argument("invalid_argument");
+    
+
     std::cout << s.top() << std::endl;
   
 }
+
 int RPN::isOperator(char c)
 {
   if(c == '+' || c == '-'|| c == '*' || c == '/')
   {
     return 1;
   }
+  
   return (-1);
 }
 

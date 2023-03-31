@@ -1,5 +1,5 @@
 #include "BitcoinExchange.hpp"
-
+#include <cctype>
 BitcoinExchange::BitcoinExchange()
 {
 }
@@ -8,21 +8,21 @@ BitcoinExchange::~BitcoinExchange()
 }
 
 BitcoinExchange::BitcoinExchange(std::string line)
-{
+{     
+    bool checkLine = validLine(line);
     std::string date = DateToken(line); 
     std::string value = ValueToken(line);
     float num = ToInt(value);
     float rate = searchRateInMap(date);
     float result = num * rate;
-    char c = line[line.find("|") + 1];
-    char b = line[line.find("|") - 1];
-    if(validDateFormat(date))
+
+    if(!checkLine)
+    {
+         std::cout <<"Error: bad input => " << line << std::endl;
+    }
+    else if(validDateFormat(date))
     {
       std::cout <<"Error: bad input => " << line << std::endl;
-    }
-    else if(!isspace(c) && !isspace(b))
-    {
-        std::cout << "Error: not good format => need space before ou after bar" << std::endl;
     }
     else if(!validValueFormat(value))
     {
@@ -107,13 +107,13 @@ std::map<std::string, float> BitcoinExchange::saveDataMap()
 
 std::string BitcoinExchange::ValueToken(std::string line)
 {
-    int end;
     int findBar = 0;
     std::string valueIndex;
+    std::string::iterator it;
     findBar = line.find('|');
-    end = findBar + 1;
-    valueIndex = line.substr(findBar + 2, end);
-    return(valueIndex);
+    valueIndex = line.substr(findBar + 1);
+    valueIndex.erase(std::remove(valueIndex.begin(),valueIndex.end(),' '),valueIndex.end());
+    return (valueIndex);
 }
 
 std::string BitcoinExchange::DateToken(std::string line)
@@ -122,7 +122,9 @@ std::string BitcoinExchange::DateToken(std::string line)
     int findBar = 0;
     std::string dateIndex;
     findBar = line.find('|');
-    dateIndex = line.substr(before, findBar - 1);
+    dateIndex = line.substr(before, findBar);
+    std::string::iterator end_pos = std::remove(dateIndex.begin(), dateIndex.end(), ' ');
+    dateIndex.erase(end_pos, dateIndex.end());
     return(dateIndex);
 }
 
@@ -154,8 +156,7 @@ bool BitcoinExchange::validDateFormat(std::string date)
     {
         return (true);
     }
-
-    if(!(year > 2008 && year <= 2023) || isdigit(year))
+    if(!(year > 2008 && year < 2023) || isdigit(year))
     {
         return (true);
     }
@@ -186,6 +187,8 @@ bool BitcoinExchange::validDateFormat(std::string date)
 bool BitcoinExchange::validValueFormat(std::string value)
 {
     int count = std::count(value.begin(), value.end(), '.');
+    if(value.size() == 0)
+        return false;
     if(count >= 2)
         return false;
     int i = 0;
@@ -202,5 +205,15 @@ bool BitcoinExchange::validValueFormat(std::string value)
     }
     return true;
 }
-   
-  
+
+bool BitcoinExchange::validLine(std::string line) 
+{
+   int i = 0;
+   while(line[i])
+   {
+    if(line[i] == '|')
+        return true;
+    i++;
+   }
+   return false;
+}

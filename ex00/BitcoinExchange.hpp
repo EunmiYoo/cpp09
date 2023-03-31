@@ -6,7 +6,7 @@
 /*   By: eyoo <eyoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 13:32:26 by eyoo              #+#    #+#             */
-/*   Updated: 2023/03/09 13:36:16 by eyoo             ###   ########.fr       */
+/*   Updated: 2023/03/27 13:21:08 by eyoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <string>
 #include <fstream>
 #include <map>
-
+#include <algorithm>
 class BitcoinExchange
 {
     private:
@@ -37,6 +37,7 @@ class BitcoinExchange
         float searchRateInMap(std::string);
         bool validDateFormat(std::string);
         bool validValueFormat(std::string);
+        bool validLine(std::string);
        
 
 };
