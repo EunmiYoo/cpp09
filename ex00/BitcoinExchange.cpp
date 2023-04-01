@@ -209,6 +209,9 @@ bool BitcoinExchange::validValueFormat(std::string value)
 bool BitcoinExchange::validLine(std::string line) 
 {
    int i = 0;
+   int count = std::count(line.begin(), line.end(), '|');
+   if(count >= 2)
+    return false;
    while(line[i])
    {
     if(line[i] == '|')

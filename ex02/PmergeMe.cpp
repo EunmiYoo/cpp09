@@ -67,7 +67,7 @@ void PmergeMe::MergeDeque(std::deque<std::pair <int, int> > myPair)
     
     //Each pair sort into what we will call [int int] pairs.
     //after Put the first elements into named "leftDeque"
-    //after Put the first elements into named "rightDeque"
+    //after Put the second elements into named "rightDeque"
     for(it = myPair.begin(); it != myPair.end(); it++)
     {
         if (it->first > it->second && it->second != 0)

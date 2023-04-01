@@ -21,9 +21,9 @@ int main(int ac, char **av)
             {
                 for(int j = 0; av[i][j]; j++)
                 {
-                    if(!isdigit(av[i][j]))
+                    if(!isdigit(av[i][j]) && !(av[i][j]=='+'))
                     {
-                        std::cout << "Error: not allowed format(only number possible)" << std::endl;
+                        std::cout << "Error: not allowed format(only positive number possible)" << std::endl;
                         return (0);
                     }        
                 }
